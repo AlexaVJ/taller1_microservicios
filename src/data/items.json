@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "product": "Essence Mascara Lash Princess",
+        "price": 9.99,
+        "stock": 5
+    },
+    {
+        "id": 2,
+        "product": "asdasEssence Mascara Lash Princess",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 3,
+        "product": "asdasEssence Mascara Lash Princess",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 4,
+        "product": "asdasEssence Mascara Lash Princess",
+        "price": 6,
+        "stock": 2
+    }
+]

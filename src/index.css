@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.rdt_TableRow:hover {
+    background-color: #94e3bd;
+}
