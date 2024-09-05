@@ -20,7 +20,7 @@ const App: React.FC = () => {
     setLoggedIn(isAuthenticated);
   }, []);
   return (
-    <div style={{ backgroundImage: `url(${imageUrl})` }}>
+    <div className='h-screen flex bg-cover items-center justify-center' style={{ backgroundImage: `url(${imageUrl})` }}>
       <Routes>
         <Route path="/" element={loggedIn ? <Navigate to="/home" /> : <Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
         <Route path="/register" element={<Register setLoggedIn={setLoggedIn} setEmail={setEmail} />} />

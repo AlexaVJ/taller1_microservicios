@@ -73,7 +73,7 @@ const Card = <T extends unknown[]>({
                         </div>
                     ))}
                     <div className='flex items-center justify-center'>
-                        <button type="submit" className='rounded-full bg-blue-800 m-5 px-5 py-2 text-gray-200'>
+                        <button type="submit" className='rounded-full bg-blue-800 m-5 px-5 py-2 text-gray-200 hover:text-gray-700 bg-blue-800 hover:bg-blue-100 '>
                             Enviar
                         </button>
                     </div>

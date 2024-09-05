@@ -73,11 +73,11 @@ const Home: React.FC<HomeProps> = ({ setLoggedIn, loggedIn, email }) => {
 
 
   return (
-    <>
+    <div className='w-screen h-screen flex flex-col'>
       
       <Navbar setLoggedIn={setLoggedIn} />
-      <div className='my-5 mx-8 items-center place-content-center'>
-        <h1 className='my-2'>Bienvenido! {username}</h1>
+      <div className='flex-grow mx-7 px-10  items-center place-content-center bg-gray-100 bg-opacity-80 backdrop-blur-lg overflow-y-auto'>
+        <h1 className=''>Bienvenido! {username}</h1>
 
         {/* {
           type == 1 ? (
@@ -104,7 +104,7 @@ const Home: React.FC<HomeProps> = ({ setLoggedIn, loggedIn, email }) => {
             )
         }
       </div>
-    </>
+    </div>
   );
 };
 
