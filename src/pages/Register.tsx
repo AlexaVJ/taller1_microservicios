@@ -1,8 +1,9 @@
 // Register.tsx
 import React from 'react';
-import Form from '../components/Form';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
+import { fieldsRegister } from '../utilities/UserData';
+import Card from '../components/Card';
 
 
 
@@ -13,7 +14,6 @@ interface RegisterProps {
 
 
 const Register: React.FC<RegisterProps> = ({setLoggedIn, setEmail}) => {
-  const image = "url(https://img.freepik.com/vector-gratis/mujer-tomando-su-cafe-e-ignorando-correos-electronicos_23-2148508014.jpg?t=st=1724775245~exp=1724778845~hmac=dcbfe11f5a741ecc6b70fd52c9b43801572a408c5442d4bbf7a9915eb7152532&w=740)"
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -36,9 +36,23 @@ const Register: React.FC<RegisterProps> = ({setLoggedIn, setEmail}) => {
     
   };
 
+  const handleRedirect = () => {
+    navigate('/');
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen w-full px-5 sm:px-0">
-      <Form type="register" onSubmit={handleRegister} image={image} error={error}/>
+    <div className='w-screen h-screen flex bg-cover items-center justify-center'>
+      <div className="lg:w-1/2 w-auto flex items-center justify-center font-serif font-bold">
+        <Card<[string, string, string]>
+          fields={fieldsRegister}
+          onSubmit={handleRegister}
+          empty={true}
+          title='Crear una cuenta'
+          alert={error}
+          onRedirect={handleRedirect}
+          redirectText='¿Ya tienes cuenta?'
+        />
+      </div>
     </div>
   );
 };

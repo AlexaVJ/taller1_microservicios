@@ -74,11 +74,12 @@ const Home: React.FC<HomeProps> = ({ setLoggedIn, loggedIn, email }) => {
 
   return (
     <>
+      
       <Navbar setLoggedIn={setLoggedIn} />
       <div className='my-5 mx-8 items-center place-content-center'>
         <h1 className='my-2'>Bienvenido! {username}</h1>
 
-        {
+        {/* {
           type == 1 ? (
             <Card fields={columns} data={item} onSubmit={onAdd} title="Agregar Producto" empty={true} />
 
@@ -93,7 +94,7 @@ const Home: React.FC<HomeProps> = ({ setLoggedIn, loggedIn, email }) => {
               </button>
             </>
           )
-        }
+        } */}
         {
           items.length === 0 ? (
             <Alert message='No hay productos disponibles' color='red' />

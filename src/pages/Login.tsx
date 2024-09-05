@@ -1,7 +1,12 @@
 // Login.tsx
-import React, { useState } from 'react';
-import Form from '../components/Form';
+// import React, { useState } from 'react';
+// import Form from '../components/Form';
 import { useNavigate } from 'react-router-dom';
+import Card from '../components/Card';
+import { fieldsLogin } from '../utilities/UserData';
+import { useState } from 'react';
+
+
 
 interface LoginProps {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,10 +14,8 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ setLoggedIn, setEmail }) => {
-  const image = "url(https://www.tailwindtap.com//assets/components/form/userlogin/login_tailwindtap.jpg)"
   const navigate = useNavigate();
   const [error, setError] = useState('');
-
   const handleLogin = async (email: string, password: string) => {
 
     // Aquí iría la lógica para consumir el endpoint
@@ -37,15 +40,32 @@ const Login: React.FC<LoginProps> = ({ setLoggedIn, setEmail }) => {
       navigate('/home');
     }
     else {
-      setError("Los datos ingresados son incorrectos")
+      setError('');
+      setTimeout(() => {
+        setError("Los datos ingresados son incorrectos");
+      }, 0);
       navigate('/');
     }
 
   };
 
+  const handleRedirect = () => {
+    navigate('/register');
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen w-full px-5 sm:px-0">
-      <Form type="login" onSubmit={handleLogin} image={image} error={error} />
+    <div className='w-screen h-screen flex bg-cover items-center justify-center'>
+      <div className="lg:w-1/2 w-auto flex items-center justify-center font-serif font-bold">
+        <Card<[string, string]>
+          fields={fieldsLogin}
+          onSubmit={handleLogin}
+          empty={true}
+          title='Inicio de Sesión'
+          alert={error}
+          onRedirect={handleRedirect}
+          redirectText='¿Aún no tienes cuenta?'
+        />
+      </div>
     </div>
   );
 };
