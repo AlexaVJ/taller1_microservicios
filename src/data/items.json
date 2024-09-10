@@ -1,25 +1,61 @@
 [
     {
         "id": 1,
-        "product": "Essence Mascara Lash Princess",
+        "name": "Essence Mascara Lash Princess",
         "price": 9.99,
         "stock": 5
     },
     {
         "id": 2,
-        "product": "asdasEssence Mascara Lash Princess",
+        "name": "asdasEssence Mascara Lash Princess",
         "price": 6,
         "stock": 2
     },
     {
         "id": 3,
-        "product": "asdasEssence Mascara Lash Princess",
+        "name": "asdasEssence Mascara Lash Princess",
         "price": 6,
         "stock": 2
     },
     {
         "id": 4,
-        "product": "asdasEssence Mascara Lash Princess",
+        "name": "asdasEssence Mascara Lash Princess",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 5,
+        "name": "Mascara Lash Princess",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 6,
+        "name": "Mascara Lash ",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 7,
+        "name": "Mascara Lash ",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 8,
+        "name": "Mascara Lash ",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 9,
+        "name": "Mascara Lash ",
+        "price": 6,
+        "stock": 2
+    },
+    {
+        "id": 10,
+        "name": "Mascara Lash ",
         "price": 6,
         "stock": 2
     }

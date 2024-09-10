@@ -1,26 +1,21 @@
 import { Fields } from './Types';
 
-export interface Data {
+export interface Product {
     id: number;
-    product: string;
+    name: string;
     price: number;
     stock: number;
-    [key: string]: string | number;
 }
 
 export const estructure = {
     id: 1,
-    product: "",
+    name: "",
     price: 1.0,
     stock: 1,
 }
 
-export interface Input {
-    [key: string]: string | number;
-}
-
 export const fieldProducto: Fields = {
-    product: {
+    name: {
         name: "Producto",
         type: "text"
     },

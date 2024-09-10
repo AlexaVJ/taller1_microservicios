@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
-import { Data } from '../utilities/Data';
 import { Fields } from '../utilities/Types';
 import Alert from './Alert';
 
-interface CardProps<T extends unknown[]> {
+interface CardProps<T> {
     fields: Fields;
-    data?: Data;
+    data?: T;
     title: string;
     empty: boolean;
-    alert: string,
+    alert: string;
     redirectText?: string;
-    onSubmit: (...args: T) => void;
+    background: boolean;
+    onSubmit: (formData: T) => void;
     onRedirect?: () => void;
 }
 
-const Card = <T extends unknown[]>({
+const Card = <T extends object>({
     fields,
     data,
     title,
     empty,
     alert,
     redirectText,
+    background,
     onSubmit,
     onRedirect
 }: CardProps<T>) => {
 
-    const [formData, setFormData] = useState<Partial<Data>>(data || {});
+    const [formData, setFormData] = useState<Partial<T>>(data || {});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type } = e.target;
@@ -38,11 +39,13 @@ const Card = <T extends unknown[]>({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(...Object.values(formData) as T);
+        onSubmit(formData as T);
+        setFormData({});
     };
 
+
     return (
-        <div className="lg:w-3/5 w-full lg:p-10 p-5 m-5 bg-gray-200 bg-opacity-20 rounded-2xl backdrop-blur-md ">
+        <div className={`lg:p-10 p-5 m-5 rounded-2xl ${background ? 'bg-gray-200 bg-opacity-20 backdrop-blur-md' : ''}`}>
             <div className="p-5 ">
                 {alert && <Alert message={alert} color="red" />}
                 <div className='py-5 flex items-center justify-center'>
@@ -54,7 +57,7 @@ const Card = <T extends unknown[]>({
                     {Object.keys(fields).map(key => (
                         <div key={key} className='p-3'>
                             {!empty && (
-                                <label>
+                                <label className='text-white'>
                                     {fields[key].name.charAt(0).toUpperCase() + fields[key].name.slice(1)}
                                 </label>
                             )}
@@ -62,7 +65,7 @@ const Card = <T extends unknown[]>({
                                 className='w-full peer px-4 py-2 border rounded-2xl border-gray-400 bg-gray-400 bg-opacity-30 text-white placeholder-white focus:outline-none focus:border-blue-200 focus:ring-0'
                                 type={fields[key].type}
                                 name={key}
-                                value={empty ? undefined : formData?.[key] ?? ""}
+                                value={formData[key as keyof T] !== undefined ? String(formData[key as keyof T]) : ""}
                                 step="any"
                                 min={fields[key].type === 'number' ? 0 : undefined}
                                 onChange={handleChange}

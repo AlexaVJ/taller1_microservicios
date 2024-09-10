@@ -1,40 +1,37 @@
-// Register.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react'
-import { fieldsRegister } from '../utilities/UserData';
+import { fieldsRegister, User_register } from '../utilities/UserData';
 import Card from '../components/Card';
-
-
+import { useFetchPostUser } from '../hooks/usersFetch';
 
 interface RegisterProps {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
 }
 
-
-const Register: React.FC<RegisterProps> = ({setLoggedIn, setEmail}) => {
+const Register: React.FC<RegisterProps> = ({ setLoggedIn, setEmail }) => {
   const navigate = useNavigate();
-  const [error, setError] = useState('');
+  const { postUser, error, success } = useFetchPostUser();
+  const [user, setUser] = useState<User_register>();
 
-  const handleRegister = (email: string, password: string, username: string) => {
-    
-    //aqui va el endpoint no me importa nada
+  const handleRegister = async (newUser: User_register) => {
+    setUser(newUser);
+    await postUser(newUser);
+  };
 
-    const register = email != "abc@abc"
-    //response.ok
-    if (register) {
-      // const data = await response.json();
+  useEffect(() => {
+    if(success && user) {
       setLoggedIn(true);
-      setEmail(email);
-      localStorage.setItem('username', username);
+      setEmail(user.email);
+      localStorage.setItem('type', '0');
+      localStorage.setItem('username', user.username);
       navigate('/home');
-    } else {
-      setError("Este usuario ya existe");
+    } 
+    else {
       navigate('/register');
     }
-    
-  };
+  }, [success, setEmail, navigate, setLoggedIn, user]);
+  
 
   const handleRedirect = () => {
     navigate('/');
@@ -42,14 +39,15 @@ const Register: React.FC<RegisterProps> = ({setLoggedIn, setEmail}) => {
 
   return (
     <div className='w-screen h-screen flex bg-cover items-center justify-center'>
-      <div className="lg:w-1/2 w-auto flex items-center justify-center font-serif font-bold">
-        <Card<[string, string, string]>
+      <div className="lg:w-1/2 w-auto flex items-center justify-center font-serif font-bold ">
+        <Card<User_register>
           fields={fieldsRegister}
           onSubmit={handleRegister}
           empty={true}
           title='Crear una cuenta'
-          alert={error}
+          alert={error || ''}
           onRedirect={handleRedirect}
+          background={true}
           redirectText='¿Ya tienes cuenta?'
         />
       </div>

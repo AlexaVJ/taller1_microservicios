@@ -3,51 +3,50 @@
 // import Form from '../components/Form';
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
-import { fieldsLogin } from '../utilities/UserData';
-import { useState } from 'react';
+import { fieldsLogin, User_login } from '../utilities/UserData';
+import { useEffect, useState } from 'react';
+import { ADMIN } from '../config/config';
+import { useFetchGetUser } from '../hooks/usersFetch';
 
 
 
 interface LoginProps {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setUserType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Login: React.FC<LoginProps> = ({ setLoggedIn, setEmail }) => {
+const Login: React.FC<LoginProps> = ({ setLoggedIn, setEmail, setUserType }) => {
   const navigate = useNavigate();
-  const [error, setError] = useState('');
-  const handleLogin = async (email: string, password: string) => {
+  const { getUserByEmail, error, success, userDB } = useFetchGetUser();
+  const [user, setUser] = useState<User_login>();
 
-    // Aquí iría la lógica para consumir el endpoint
-    // Ejemplo de llamada a un endpoint:
-    // const response = await fetch('/api/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ email, password }),
-    // });
-    const login = password == "123";
-    const username = "Pepito";
-    //Acuerdese de pedirle el usuario al back xd
-    //response.ok
+  const handleLogin = async (user: User_login) => {
+    setUser(user);
+    await getUserByEmail(user.email);
+  };
 
-    if (login) {
+  useEffect(() => {
+    if(success && (user && userDB && user.password === userDB.password)) {
       localStorage.setItem('loggedIn', 'true');
-      localStorage.setItem('username', username);
+      localStorage.setItem('username', userDB.username);
+      if(userDB.email == ADMIN) {
+        setUserType('1');
+        localStorage.setItem('type', '1');
+      }
+      else {
+        setUserType('0');
+        localStorage.setItem('type', '0');
+      }
       setLoggedIn(true);
-      setEmail(email);
+      setEmail(userDB.username);
       navigate('/home');
-    }
+    } 
     else {
-      setError('');
-      setTimeout(() => {
-        setError("Los datos ingresados son incorrectos");
-      }, 0);
       navigate('/');
     }
-
-  };
+  }, [success, navigate, setEmail, setLoggedIn, user, userDB, setUserType]);
+  
 
   const handleRedirect = () => {
     navigate('/register');
@@ -55,16 +54,17 @@ const Login: React.FC<LoginProps> = ({ setLoggedIn, setEmail }) => {
 
   return (
     <div className='w-screen h-screen flex bg-cover items-center justify-center'>
-      <div className="lg:w-1/2 w-auto flex items-center justify-center font-serif font-bold">
-        <Card<[string, string]>
-          fields={fieldsLogin}
-          onSubmit={handleLogin}
-          empty={true}
-          title='Inicio de Sesión'
-          alert={error}
-          onRedirect={handleRedirect}
-          redirectText='¿Aún no tienes cuenta?'
-        />
+      <div className="lg:w-1/2 w-auto flex items-center justify-center font-serif font-bold ">
+          <Card<User_login>
+            fields={fieldsLogin}
+            onSubmit={handleLogin}
+            empty={true}
+            title='Inicio de Sesión'
+            alert={error || ''}
+            background={true}
+            onRedirect={handleRedirect}
+            redirectText='¿Aún no tienes cuenta?'
+          />
       </div>
     </div>
   );
